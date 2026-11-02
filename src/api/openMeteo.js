@@ -95,7 +95,7 @@ export async function fetchAirQuality(latitude, longitude, signal) {
   url.searchParams.set('longitude', String(longitude))
   url.searchParams.set(
     'current',
-    'european_aqi,pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,ozone',
+    'european_aqi,pm10,pm2_5,nitrogen_dioxide,ozone',
   )
   url.searchParams.set('timezone', 'auto')
 

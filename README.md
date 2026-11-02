@@ -103,6 +103,7 @@ weatherweb/
 │   ├── i18n/LanguageContext.jsx
 │   ├── hooks/useWeatherDashboard.js
 │   ├── hooks/useCityCompare.js
+│   ├── hooks/useCitySearch.js
 │   ├── utils/weather.js
 │   ├── utils/format.js
 │   └── components/
@@ -127,6 +128,7 @@ weatherweb/
 - **`App.jsx`** — Sayfa iskeleti: üst bar, arama, favoriler, ana kolon (hava) ve yan kolon (AQI, saat, şehir).
 - **`useWeatherDashboard.js`** — Şehir seçimi, API çağrıları, birim, favoriler, konum, tema.
 - **`useCityCompare.js`** — İkinci şehir için ayrı tahmin / AQI isteği.
+- **`useCitySearch.js`** — Şehir araması (debounce, ortak).
 - **`openMeteo.js`** — Geocode, tahmin, hava kalitesi, reverse geocode ve Vikipedi istekleri.
 - **`weather.js`** — WMO kodları, ikon, tema, AQI skalası, uyarılar, bugünün planı.
 - **`format.js`** — Sıcaklık, saat, nüfus, bayrak emoji, localStorage. Varsayılan şehir İstanbul.

@@ -244,7 +244,6 @@ body {
 .btn-locate:hover,
 .btn-unit:hover,
 .btn-fav:hover,
-.topbar-actions .btn-unit:hover,
 .fav-chip:hover {
   border-color: var(--accent);
   color: var(--ink);

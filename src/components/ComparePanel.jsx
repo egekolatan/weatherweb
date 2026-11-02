@@ -19,7 +19,7 @@ export default function ComparePanel({
   const rightRows = rightReady ? rowsFor(compare.weather, compare.air, unit, t) : []
 
   return (
-    <section className="hk-card compare-card">
+    <section className="hk-card">
       <div className="section-head">
         <h2>{t('compareTitle')}</h2>
         <span>{t('compareHint')}</span>
@@ -94,8 +94,8 @@ function rowsFor(weather, air, unit, t) {
 }
 
 function whoWins(left, right) {
-  if (left.prefer === 'none' || left.value == null || right.value == null) return ''
-  if (left.value === right.value) return ''
-  if (left.prefer === 'low') return left.value < right.value ? 'left' : 'right'
-  return left.value > right.value ? 'left' : 'right'
+  if (left.prefer !== 'low' || left.value == null || right.value == null || left.value === right.value) {
+    return ''
+  }
+  return left.value < right.value ? 'left' : 'right'
 }

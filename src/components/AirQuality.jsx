@@ -5,18 +5,7 @@ import { aqiInfo } from '../utils/weather'
 export default function AirQuality({ air }) {
   const { t, locale } = useLang()
 
-  if (!air?.current) {
-    return (
-      <section className="hk-card">
-        <div className="section-head">
-          <h2>{t('air')}</h2>
-        </div>
-        <p className="mb-0 muted">{t('airEmpty')}</p>
-      </section>
-    )
-  }
-
-  const aqi = air.current.european_aqi
+  const aqi = air?.current?.european_aqi
   if (aqi == null) {
     return (
       <section className="hk-card">

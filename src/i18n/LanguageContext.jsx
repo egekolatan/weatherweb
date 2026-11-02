@@ -43,7 +43,7 @@ export function LanguageProvider({ children }) {
   }, [lang, t])
 
   const value = useMemo(
-    () => ({ lang, locale, t, toggleLang, apiLang: lang }),
+    () => ({ lang, locale, t, toggleLang }),
     [lang, locale, t, toggleLang],
   )
 

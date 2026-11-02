@@ -4,8 +4,8 @@ import {
   fetchCityProfile,
   fetchForecast,
   reverseCity,
-  searchCities,
 } from '../api/openMeteo'
+import { useCitySearch } from './useCitySearch'
 import {
   DEFAULT_CITY,
   loadFavorites,
@@ -19,7 +19,8 @@ import { useLang } from '../i18n/LanguageContext'
 import { themeFromWeather } from '../utils/weather'
 
 export function useWeatherDashboard() {
-  const { t, apiLang } = useLang()
+  const { t, lang } = useLang()
+  const { query, setQuery, suggestions, setSuggestions, searching } = useCitySearch(lang)
   const [city, setCity] = useState(loadLastCity() ?? DEFAULT_CITY)
   const [weather, setWeather] = useState(null)
   const [air, setAir] = useState(null)
@@ -28,9 +29,6 @@ export function useWeatherDashboard() {
   const [unit, setUnitState] = useState(loadUnit)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [query, setQuery] = useState('')
-  const [suggestions, setSuggestions] = useState([])
-  const [searching, setSearching] = useState(false)
   const [locating, setLocating] = useState(false)
 
   useEffect(() => {
@@ -62,44 +60,18 @@ export function useWeatherDashboard() {
 
   useEffect(() => {
     const controller = new AbortController()
-    fetchCityProfile(city.name, controller.signal, apiLang).then((wiki) => {
+    fetchCityProfile(city.name, controller.signal, lang).then((wiki) => {
       if (!controller.signal.aborted) setProfile(wiki)
     })
     return () => controller.abort()
-  }, [city, apiLang])
-
-  useEffect(() => {
-    if (query.trim().length < 2) {
-      setSuggestions([])
-      setSearching(false)
-      return undefined
-    }
-
-    const controller = new AbortController()
-    const timer = setTimeout(async () => {
-      setSearching(true)
-      try {
-        const results = await searchCities(query, controller.signal, apiLang)
-        if (!controller.signal.aborted) setSuggestions(results)
-      } catch (err) {
-        if (err.name !== 'AbortError') setSuggestions([])
-      } finally {
-        if (!controller.signal.aborted) setSearching(false)
-      }
-    }, 280)
-
-    return () => {
-      clearTimeout(timer)
-      controller.abort()
-    }
-  }, [query, apiLang])
+  }, [city, lang])
 
   const selectCity = useCallback((nextCity) => {
     setLoading(true)
     setCity(nextCity)
     setQuery('')
     setSuggestions([])
-  }, [])
+  }, [setQuery, setSuggestions])
 
   const toggleUnit = useCallback(() => {
     setUnitState((current) => {
@@ -143,7 +115,7 @@ export function useWeatherDashboard() {
     navigator.geolocation.getCurrentPosition(
       async ({ coords }) => {
         try {
-          const found = await reverseCity(coords.latitude, coords.longitude, undefined, apiLang)
+          const found = await reverseCity(coords.latitude, coords.longitude, undefined, lang)
           selectCity({
             ...found,
             name: found.name || t('currentLocation'),
@@ -165,7 +137,7 @@ export function useWeatherDashboard() {
       },
       { timeout: 8000 },
     )
-  }, [selectCity, t, apiLang])
+  }, [selectCity, t, lang])
 
   const theme = weather
     ? themeFromWeather(weather.current.weather_code, weather.current.is_day)

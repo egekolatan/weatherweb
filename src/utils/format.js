@@ -1,11 +1,12 @@
 const FAVORITES_KEY = 'weatherweb-favorites'
 const UNIT_KEY = 'weatherweb-unit'
 const LAST_CITY_KEY = 'weatherweb-last-city'
+const COMPARE_KEY = 'weatherweb-compare'
 
-export function formatTemp(celsius, unit, withSymbol = true) {
+export function formatTemp(celsius, unit) {
   if (celsius == null || Number.isNaN(celsius)) return '—'
   const value = unit === 'f' ? (celsius * 9) / 5 + 32 : celsius
-  return `${Math.round(value)}${withSymbol ? '°' : ''}`
+  return `${Math.round(value)}°`
 }
 
 export function formatNumber(value, digits = 0, locale = 'tr-TR') {
@@ -14,10 +15,6 @@ export function formatNumber(value, digits = 0, locale = 'tr-TR') {
     maximumFractionDigits: digits,
     minimumFractionDigits: digits,
   })
-}
-
-export function formatHour(iso, locale = 'tr-TR') {
-  return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })
 }
 
 export function formatClock(iso, locale = 'tr-TR') {
@@ -110,7 +107,34 @@ export const ANKARA_CITY = {
   population: 3517182,
 }
 
-const COMPARE_KEY = 'weatherweb-compare'
+export const QUICK_CITIES = [
+  DEFAULT_CITY,
+  ANKARA_CITY,
+  {
+    id: 311046,
+    name: 'İzmir',
+    latitude: 38.4127,
+    longitude: 27.1384,
+    country: 'Türkiye',
+    country_code: 'TR',
+    admin1: 'İzmir',
+    timezone: 'Europe/Istanbul',
+    elevation: 25,
+    population: 2505570,
+  },
+  {
+    id: 323777,
+    name: 'Antalya',
+    latitude: 36.9081,
+    longitude: 30.6956,
+    country: 'Türkiye',
+    country_code: 'TR',
+    admin1: 'Antalya',
+    timezone: 'Europe/Istanbul',
+    elevation: 39,
+    population: 758188,
+  },
+]
 
 export function pickCompareCity(primary) {
   return primary?.id === DEFAULT_CITY.id ? ANKARA_CITY : DEFAULT_CITY

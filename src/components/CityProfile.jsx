@@ -11,7 +11,7 @@ export default function CityProfile({ city, weather, profile }) {
   ]
 
   return (
-    <section className="hk-card city-card">
+    <section className="hk-card">
       {profile?.thumbnail && (
         <div className="city-photo">
           <img src={profile.thumbnail} alt={city.name} />

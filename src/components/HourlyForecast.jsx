@@ -1,5 +1,5 @@
 import { useLang } from '../i18n/LanguageContext'
-import { formatHour, formatTemp } from '../utils/format'
+import { formatClock, formatTemp } from '../utils/format'
 import { describeWeather, nextHours } from '../utils/weather'
 
 export default function HourlyForecast({ weather, unit }) {
@@ -17,7 +17,7 @@ export default function HourlyForecast({ weather, unit }) {
           const info = describeWeather(hour.code, weather.current.is_day, t)
           return (
             <article className="hour-chip" key={hour.time}>
-              <span className="hour-time">{index === 0 ? t('now') : formatHour(hour.time, locale)}</span>
+              <span className="hour-time">{index === 0 ? t('now') : formatClock(hour.time, locale)}</span>
               <i className={`bi ${info.icon}`} />
               <strong>{formatTemp(hour.temperature, unit)}</strong>
               <span className="hour-rain">

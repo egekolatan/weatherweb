@@ -109,7 +109,7 @@ const COASTAL_CITIES = /istanbul|izmir|antalya|bodrum|alanya|mersin|trabzon|sams
 const MUSEUM_RE = /müze|museum|galeri|gallery|saray|palace|kale|castle|ören yer|antik|historic|historical/
 const PARK_RE = /park|bahçe|garden|koru|yürüyüş|promenade|promenad/
 
-export function isCoastalCity(city, profile) {
+function isCoastalCity(city, profile) {
   const nameBlob = [city?.name, city?.admin1].filter(Boolean).join(' ').toLocaleLowerCase('tr-TR')
   if (COASTAL_CITIES.test(nameBlob)) return true
   const extract = [profile?.extract, profile?.title].filter(Boolean).join(' ').toLocaleLowerCase('tr-TR')
